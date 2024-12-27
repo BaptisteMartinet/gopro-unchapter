@@ -3,10 +3,10 @@
 import React from 'react';
 import assert from 'assert';
 import { fetchFile } from "@ffmpeg/util";
-import { indexMultipleArrayItems } from './utils/array';
-import { saveFile } from './utils/saveFile';
-import { parseGoproFilename } from './utils/gopro';
-import { useFFmpeg } from './hooks';
+import { indexMultipleArrayItems } from '@/utils/array';
+import { saveFile } from '@/utils/saveFile';
+import { parseGoproFilename } from '@/utils/gopro';
+import { useFFmpeg } from '@/hooks';
 
 export default function Home() {
   const { ffmpeg, ensureFFmpegLoaded, loading, error } = useFFmpeg();
