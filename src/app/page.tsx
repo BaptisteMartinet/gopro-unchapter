@@ -1,8 +1,12 @@
 'use client'
 
+import { NoSSRWrapper } from '@/components';
 import Home from './Home';
-import NoSSRWrapper from './NoSSRWrapper';
 
 export default function Page() {
-  return <NoSSRWrapper><Home /></NoSSRWrapper>;
+  return (
+    <NoSSRWrapper>
+      <Home />
+    </NoSSRWrapper>
+  );
 }
