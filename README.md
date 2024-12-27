@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GoPro Unchapter
 
-## Getting Started
+A simple static website to merge GoPro video chapters.  
+Works 100% locally without any server.
 
-First, run the development server:
+### Chaptering look around
+Gopro uses a technique called file chaptering for two main reasons:  
+- Prevent file corruptions from deleting hours of recording.
+- Respect the FAT32 4gb file size limitation.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+A chapter can be created for two reason:
+- The file size of 4gb has been reached.
+- The GoPro is in loop mode and is auto chaptering files to make the loop work (eg. Creating segments of 1 minute and removing the first one each time a new one is added when GoPro is in 5 minutes loop mode).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
+- NextJS
+- FFMpeg.wasm
+- jszip
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## TODO
+- [ ] Re-encode in different format (eg. .mp4 -> .avi)
+- [ ] Apply video compression (.eg Video resolution, bitrate, etc)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
