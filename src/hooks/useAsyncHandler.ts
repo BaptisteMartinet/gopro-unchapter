@@ -6,17 +6,21 @@ export type AsyncStatus<T> =
   | { status: "fulfilled"; value: T }
   | { status: "rejected"; error: Error };
 
-export function useAsyncStatus<T>() {
+export function useAsyncHandler<T, ArgsType extends Array<unknown>>(
+  fn: (...args: ArgsType) => Promise<T>
+) {
   const [status, setStatus] = useState<AsyncStatus<T>>({
     status: "uninitialized",
   });
 
-  const track = (promise: Promise<T>) => {
+  const run = (...args: ArgsType) => {
+    const promise = fn(...args);
     setStatus({ status: "pending", promise });
     promise
-      .then((res) => setStatus({ status: "fulfilled", value: res }))
-      .catch((err) => setStatus({ status: "rejected", error: err }));
+      .then((value) => setStatus({ status: "fulfilled", value }))
+      .catch((error) => setStatus({ status: "rejected", error }));
+    return promise;
   };
 
-  return [status, track] as const;
+  return [status, run] as const;
 }
