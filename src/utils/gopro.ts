@@ -1,7 +1,7 @@
 import assert from "assert";
 import { isStrNum } from "./string";
 // Doc https://community.gopro.com/s/article/GoPro-Camera-File-Naming-Convention?language=en_US
-const GoproFilenameRegex = /^G([HX])(\d\d|[A-Z][A-Z])(\d\d\d\d).MP4$/;
+const GoproFilenameRegex = /^G([HX])(\d\d|[A-Z][A-Z])(\d\d\d\d).mp4|MP4$/;
 
 export function parseGoproFilename(filename: string) {
   const res = GoproFilenameRegex.exec(filename);
