@@ -3,6 +3,7 @@
 import React from 'react';
 import assert from 'assert';
 import { fetchFile } from "@ffmpeg/util";
+import { BlobReader, BlobWriter, ZipWriter } from '@zip.js/zip.js';
 import { indexMultipleArrayItems } from '@/utils/array';
 import { saveFile } from '@/utils/saveFile';
 import { parseGoproFilename } from '@/utils/gopro';
@@ -22,7 +23,12 @@ export default function Home() {
         return `${type}:${encoding}:${chapter}`;
       });
       console.log(`Concatenating ${filesWithInfo.length} files into ${indexedFiles.size} files.`);
+
       await ensureFFmpegLoaded();
+
+      const zipFileWriter = new BlobWriter();
+      const zipWriter = new ZipWriter(zipFileWriter);
+
       for (const indexedFile of indexedFiles.values()) {
         console.log(`Writing ${indexedFile.length} files.`);
         for (const file of indexedFile)
@@ -34,15 +40,18 @@ export default function Home() {
         await ffmpeg.exec(['-f', 'concat', '-safe', '0', '-i', 'copyContent.txt', '-c', 'copy', 'output.mp4']);
         console.log('Reading');
         const data = await ffmpeg.readFile("output.mp4");
-        const indexInfo = indexedFile[0].info;
         console.log('Blobing');
-        saveFile(new Blob([data], { type: "video/mp4" }), `${indexInfo.chapter}.mp4`);
+        const indexInfo = indexedFile[0].info;
+        const chapterFilename = `${indexInfo.chapter}.mp4`;
+        zipWriter.add(chapterFilename, new BlobReader(new Blob([data], { type: "video/mp4" })));
         console.log('Cleaning up');
         await ffmpeg.deleteFile('output.mp4');
         await ffmpeg.deleteFile('copyContent.txt');
         for (const file of indexedFile)
           await ffmpeg.deleteFile(file.file.name);
       }
+      const zip = await zipWriter.close();
+      saveFile(zip, 'test.zip');
     };
 
     if (files.length < 2)
