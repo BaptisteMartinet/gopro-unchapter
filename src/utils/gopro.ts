@@ -12,20 +12,20 @@ export function parseGoproFilename(filename: string) {
   const rawEncoding = res.at(1);
   const rawChapter = res.at(2);
   const rawFileNumber = res.at(3);
-  const rawMimeType = res.at(4);
+  const rawFileExtension = res.at(4);
   assert(
     rawEncoding && rawChapter && rawFileNumber,
-    `Filename: ${filename}, Encoding: ${rawEncoding}, chapter: ${rawChapter}, fileNumber: ${rawFileNumber}, mimeType: ${rawMimeType}`
+    `Filename: ${filename}, Encoding: ${rawEncoding}, chapter: ${rawChapter}, fileNumber: ${rawFileNumber}, fileExtension: ${rawFileExtension}`
   );
   const encoding = rawEncoding === "H" ? "AVC" : "HEVC";
   const chapter = rawChapter;
   const fileNumber = Number(rawFileNumber);
-  const mimeType = rawMimeType;
+  const fileExtension = rawFileExtension;
   return {
     type: isStrNum(rawChapter) ? "chaptered" : "looping",
     encoding,
     chapter,
     fileNumber,
-    mimeType,
+    fileExtension,
   } as const;
 }
