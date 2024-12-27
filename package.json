@@ -11,6 +11,7 @@
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.13",
     "@ffmpeg/util": "^0.12.1",
+    "@zip.js/zip.js": "^2.7.54",
     "next": "15.1.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
