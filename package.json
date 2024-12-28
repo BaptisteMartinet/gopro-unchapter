@@ -15,6 +15,7 @@
     "@mantine/dropzone": "^7.15.2",
     "@mantine/hooks": "^7.15.2",
     "@mantine/notifications": "^7.15.2",
+    "@tabler/icons-react": "^3.26.0",
     "@zip.js/zip.js": "^2.7.54",
     "next": "15.1.2",
     "react": "^19.0.0",
