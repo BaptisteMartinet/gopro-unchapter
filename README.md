@@ -1,7 +1,7 @@
 # GoPro Unchapter
 
 A simple static website to merge GoPro video chapters.  
-Works 100% locally without any server.
+Works 100% locally.
 
 ### Chaptering look around
 Gopro uses a technique called file chaptering for two main reasons:  
