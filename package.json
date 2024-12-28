@@ -11,6 +11,10 @@
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.13",
     "@ffmpeg/util": "^0.12.1",
+    "@mantine/core": "^7.15.2",
+    "@mantine/dropzone": "^7.15.2",
+    "@mantine/hooks": "^7.15.2",
+    "@mantine/notifications": "^7.15.2",
     "@zip.js/zip.js": "^2.7.54",
     "next": "15.1.2",
     "react": "^19.0.0",
@@ -23,6 +27,9 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.1.2",
+    "postcss": "^8.4.49",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
     "typescript": "^5"
   }
 }
