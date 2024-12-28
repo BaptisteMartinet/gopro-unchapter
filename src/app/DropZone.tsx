@@ -5,7 +5,7 @@ import { Dropzone, DropzoneProps as MantineDropzoneProps, MIME_TYPES } from '@ma
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons-react';
 import { convertGigabytesToBytes } from '@/utils/bytes';
 
-const MaxFiles = 100; // Arbitrary value
+const MaxFiles = 999; // Arbitrary value
 const MaxFileSize = convertGigabytesToBytes(8); // Arbitrary value. GoPro files shoud not be more than 4gb? Also FFmpeg will certainly run out of memory.
 const AcceptedMIMETypes = [MIME_TYPES.mp4];
 
