@@ -4,6 +4,13 @@ import React from 'react';
 import { Anchor, Box, Center, Group, Text, Tooltip } from '@mantine/core';
 import VideoProcess from './VideoProcess';
 
+/**
+ * TODO
+ * Style des components Processing*
+ * Order les clips indexes
+ * Set un nom de zip
+ */
+
 export default function Home() {
   return (
     <Center pos="relative" w="100%" h="100dvh">
