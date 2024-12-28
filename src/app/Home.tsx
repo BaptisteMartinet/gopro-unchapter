@@ -1,18 +1,20 @@
 'use client'
 
 import React from 'react';
-import assert from 'assert';
+import { Anchor, Box, Center, Group, Text, Tooltip } from '@mantine/core';
+import { FileWithPath } from '@mantine/dropzone';
 import { fetchFile } from "@ffmpeg/util";
 import { BlobReader, BlobWriter, ZipWriter } from '@zip.js/zip.js';
 import { indexMultipleArrayItems } from '@/utils/array';
 import { saveFile } from '@/utils/saveFile';
 import { parseGoproFilename } from '@/utils/gopro';
 import { useFFmpeg } from '@/hooks';
+import DropZone from './DropZone';
 
 export default function Home() {
   const { ffmpeg, ensureFFmpegLoaded, loading, error } = useFFmpeg();
 
-  const handleFiles = (files: FileList) => {
+  const handleFiles = (files: Array<FileWithPath>) => {
     const _handleFiles = async () => {
       const filesWithInfo = Array.from(files).map((file) => ({
         file,
@@ -66,14 +68,47 @@ export default function Home() {
     return <p>{error.message}</p>;
 
   return (
-    <input
-      type="file"
-      accept="video/mp4"
-      multiple
-      onChange={(event) => {
-        assert(event.target.files);
-        handleFiles(event.target.files);
-      }}
-    />
+    <Center pos="relative" w="100%" h="100dvh">
+      <Group gap="xl">
+        <Box maw={400}>
+          <Text fz="h1" c="white" fw={500} mb={8}>GoPro Unchapter</Text>
+          <Text size="lg">
+            Easily reconcile GoPro video chapters to only get the videos you need.
+            <br />
+            Everything happens in the browser. Files are not sent to any server.
+          </Text>
+          <br />
+          <Tooltip label="GoPro documentation ↗">
+            <Anchor
+              href="https://community.gopro.com/s/article/GoPro-Camera-File-Chaptering-Information"
+              target="_blank"
+            >
+              What is file chaptering?
+            </Anchor>
+          </Tooltip>
+        </Box>
+        <DropZone onDrop={(files) => handleFiles(files)} />
+      </Group>
+      <Text pos="absolute" bottom={16} left={0} w="100%" ta="center">
+        {'Made by '}
+        <Tooltip label="LinkedIn ↗">
+          <Anchor
+            href="https://www.linkedin.com/in/baptiste-martinet/"
+            target="_blank"
+          >
+            Baptiste Martinet
+          </Anchor>
+        </Tooltip>
+        {' - '}
+        <Tooltip label="GitHub ↗">
+          <Anchor
+            href="https://github.com/BaptisteMartinet/gopro-unchapter"
+            target="_blank"
+          >
+            Source code
+          </Anchor>
+        </Tooltip>
+      </Text>
+    </Center>
   );
 }
