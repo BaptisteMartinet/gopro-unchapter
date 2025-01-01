@@ -26,7 +26,7 @@ type ActionType =
 
 function stepReducer(state: LogingState, action: ActionType): LogingState {
   switch (action.type) {
-    case 'initProcessing': return { status: 'processing', step: 0, steps: action.steps, message: action.message };
+    case 'initProcessing': return { status: 'processing', step: 1, steps: action.steps, message: action.message };
     case 'increaseStep': {
       assert(state.status === 'processing');
       return { ...state, step: state.step + 1, message: action.message ?? state.message };
@@ -51,7 +51,7 @@ export default function VideoProcess() {
         const { type, encoding, chapter } = info;
         return `${type}:${encoding}:${chapter}`;
       });
-      dispatchLog({ type: 'initProcessing', steps: indexedFilesMap.size * 4, message: 'Loading libraries' });
+      dispatchLog({ type: 'initProcessing', steps: 1 + indexedFilesMap.size * 4, message: 'Loading libraries' });
       await ensureFFmpegLoaded();
 
       const zipFileWriter = new BlobWriter();
