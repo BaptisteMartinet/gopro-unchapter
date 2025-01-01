@@ -87,7 +87,7 @@ export default function VideoProcess() {
     if (files.length < 2)
       return dispatchLog({ type: 'error', message: 'At least two files must be uploaded' });
     _handleFilesAsync().catch((error) => {
-      dispatchLog({ type: 'error', message: error.toString() });
+      dispatchLog({ type: 'error', message: String(error) });
     });
   };
 
