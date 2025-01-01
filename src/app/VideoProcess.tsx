@@ -57,7 +57,7 @@ export default function VideoProcess() {
 
       let idx = 0;
       for (const indexedFiles of indexedFilesMap.values()) {
-        dispatchLog({ type: 'increaseStep', message: `Generating clip ${idx + 1}/${indexedFilesMap.size}` });
+        dispatchLog({ type: 'increaseStep', message: `Generating clips ${idx + 1}/${indexedFilesMap.size}` });
         for (const file of indexedFiles)
           await ffmpeg.writeFile(file.file.name, await fetchFile(file.file));
         const copyContentText = indexedFiles.map(({ file }) => `file '${file.name}'`).join('\n');
