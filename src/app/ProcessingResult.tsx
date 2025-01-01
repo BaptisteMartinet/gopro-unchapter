@@ -1,4 +1,6 @@
+import React from 'react';
 import { Button, Stack } from '@mantine/core';
+import { useTimeout } from '@mantine/hooks';
 import { IconDownload } from '@tabler/icons-react';
 
 function formatDatePart(part: number) {
@@ -22,6 +24,13 @@ export interface ProcessingResultProps {
 
 export default function ProcessingResult(props: ProcessingResultProps) {
   const { zipURL, onReset } = props;
+  const [downloading, setDownloading] = React.useState(false);
+  const downloadTimeoutHandlers = useTimeout(() => setDownloading(false), 5000);
+
+  const handleDownload = () => {
+    setDownloading(true);
+    downloadTimeoutHandlers.start();
+  };
 
   return (
     <Stack align="center">
@@ -29,8 +38,10 @@ export default function ProcessingResult(props: ProcessingResultProps) {
         component="a"
         href={zipURL}
         download={makeZipFilename()}
+        onClick={handleDownload}
         size="lg"
         rightSection={<IconDownload />}
+        loading={downloading}
       >
         Download
       </Button>
