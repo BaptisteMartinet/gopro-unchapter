@@ -20,7 +20,7 @@ export default function Home() {
           <Text size="lg">
             Easily reconcile GoPro video chapters to only get the videos you need.
             <br />
-            Everything happens in the browser. Files are not sent to any server.
+            Everything happens in the browser. Files are not sent to a server.
           </Text>
           <br />
           <Tooltip label="GoPro documentation ↗">
