@@ -75,7 +75,7 @@ export default function VideoProcess() {
         const data = await ffmpeg.readFile("output.mp4");
         const indexInfo = sortedFiles[0].info;
         const chapterFilename = `${indexInfo.chapter}.mp4`;
-        zipWriter.add(chapterFilename, new BlobReader(new Blob([data], { type: "video/mp4" })));
+        await zipWriter.add(chapterFilename, new BlobReader(new Blob([data], { type: "video/mp4" })));
         dispatchLog({ type: 'increaseStep' });
         await ffmpeg.deleteFile('output.mp4');
         await ffmpeg.deleteFile('copyContent.txt');
