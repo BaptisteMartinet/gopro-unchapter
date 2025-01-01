@@ -90,11 +90,11 @@ export default function VideoProcess() {
     });
   };
 
-  if (log.status === 'error')
-    return <ProcessingError message={log.message} />
   if (log.status === 'initial')
     return <DropZone onDrop={(files) => handleFiles(files)} />;
   if (log.status === 'processing')
     return <ProcessingProgress step={log.step} steps={log.steps} message={log.message} />;
+  if (log.status === 'error')
+    return <ProcessingError message={log.message} />
   return <ProcessingResult zipURL={log.zipURL} />;
 }
