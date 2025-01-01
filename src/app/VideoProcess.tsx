@@ -66,7 +66,11 @@ export default function VideoProcess() {
         const copyContentText = sortedFiles.map(({ file }) => `file '${file.name}'`).join('\n');
         await ffmpeg.writeFile('copyContent.txt', copyContentText);
         dispatchLog({ type: 'increaseStep' });
-        await ffmpeg.exec(['-f', 'concat', '-safe', '0', '-i', 'copyContent.txt', '-c', 'copy', 'output.mp4']);
+        const execResult = await ffmpeg.exec(['-f', 'concat', '-safe', '0', '-i', 'copyContent.txt', '-c', 'copy', 'output.mp4']);
+        if (execResult !== 0) {
+          dispatchLog({ type: 'error', message: 'Clip creation failed' });
+          return;
+        }
         dispatchLog({ type: 'increaseStep' });
         const data = await ffmpeg.readFile("output.mp4");
         const indexInfo = sortedFiles[0].info;
