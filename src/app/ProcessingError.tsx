@@ -1,10 +1,17 @@
-import { Text } from '@mantine/core';
+import { Button, Stack, Text } from '@mantine/core';
 
 export interface ProcessingErrorProps {
   message: string;
+  onReset: () => void;
 }
 
 export default function ProcessingError(props: ProcessingErrorProps) {
-  const { message } = props;
-  return <Text>{message}</Text>;
+  const { message, onReset } = props;
+
+  return (
+    <Stack align="center">
+      <Text c="red">{message}</Text>
+      <Button onClick={onReset} variant="light">Reset</Button>
+    </Stack>
+  );
 }

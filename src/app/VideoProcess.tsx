@@ -22,6 +22,7 @@ type ActionType =
   | { type: 'increaseStep', message?: string }
   | { type: 'finish', zipURL: string }
   | { type: 'error', message: string }
+  | { type: 'reset' }
 
 function stepReducer(state: LogingState, action: ActionType): LogingState {
   switch (action.type) {
@@ -32,6 +33,7 @@ function stepReducer(state: LogingState, action: ActionType): LogingState {
     }
     case 'finish': return { status: 'finished', zipURL: action.zipURL };
     case 'error': return { status: 'error', message: action.message };
+    case 'reset': return { status: 'initial' };
   }
 }
 
@@ -95,6 +97,6 @@ export default function VideoProcess() {
   if (log.status === 'processing')
     return <ProcessingProgress step={log.step} steps={log.steps} message={log.message} />;
   if (log.status === 'error')
-    return <ProcessingError message={log.message} />
-  return <ProcessingResult zipURL={log.zipURL} />;
+    return <ProcessingError message={log.message} onReset={() => dispatchLog({ type: 'reset' })} />
+  return <ProcessingResult zipURL={log.zipURL} onReset={() => dispatchLog({ type: 'reset' })} />;
 }

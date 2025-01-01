@@ -32,7 +32,9 @@ export default function Home() {
             </Anchor>
           </Tooltip>
         </Box>
-        <VideoProcess />
+        <Box w={500}>
+          <VideoProcess />
+        </Box>
       </Group>
       <Text pos="absolute" bottom={16} left={0} w="100%" ta="center">
         {'Made by '}
