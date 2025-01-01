@@ -58,21 +58,22 @@ export default function VideoProcess() {
       let idx = 0;
       for (const indexedFiles of indexedFilesMap.values()) {
         dispatchLog({ type: 'increaseStep', message: `Generating clips ${idx + 1}/${indexedFilesMap.size}` });
-        for (const file of indexedFiles)
+        const sortedFiles = indexedFiles.sort((lhs, rhs) => lhs.info.fileNumber - rhs.info.fileNumber);
+        for (const file of sortedFiles)
           await ffmpeg.writeFile(file.file.name, await fetchFile(file.file));
-        const copyContentText = indexedFiles.map(({ file }) => `file '${file.name}'`).join('\n');
+        const copyContentText = sortedFiles.map(({ file }) => `file '${file.name}'`).join('\n');
         await ffmpeg.writeFile('copyContent.txt', copyContentText);
         dispatchLog({ type: 'increaseStep' });
         await ffmpeg.exec(['-f', 'concat', '-safe', '0', '-i', 'copyContent.txt', '-c', 'copy', 'output.mp4']);
         dispatchLog({ type: 'increaseStep' });
         const data = await ffmpeg.readFile("output.mp4");
-        const indexInfo = indexedFiles[0].info;
+        const indexInfo = sortedFiles[0].info;
         const chapterFilename = `${indexInfo.chapter}.mp4`;
         zipWriter.add(chapterFilename, new BlobReader(new Blob([data], { type: "video/mp4" })));
         dispatchLog({ type: 'increaseStep' });
         await ffmpeg.deleteFile('output.mp4');
         await ffmpeg.deleteFile('copyContent.txt');
-        for (const file of indexedFiles)
+        for (const file of sortedFiles)
           await ffmpeg.deleteFile(file.file.name);
         idx += 1;
       }
